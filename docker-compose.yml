@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    image: php:8-apache
+    ports:
+      - "8042:8042"
+    volumes:
+      - ./source_code:/var/www/html
+      #- ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+      #- ./000-default-le-ssl.conf:/etc/apache2/sites-available/000-default-le-ssl.conf
+    environment:
+      - PHPMYADMIN_USER=root
+      - PHPMYADMIN_PASSWORD=bX3rT3cU
+    depends_on:
+      - db
+    networks:
+      - my_network
+
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: bX3rT3cU
+      MYSQL_DATABASE: name_bd
+      MYSQL_USER: user_name_bd
+      MYSQL_PASSWORD: pass_bd
+    networks:
+      - my_network
+
+networks:
+  my_network:
